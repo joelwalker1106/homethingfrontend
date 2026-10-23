@@ -2,7 +2,7 @@
   <div class="container">
     <h2 class="section-title">熱門分類</h2>
     <ul class="grid">
-      @for (category of categories; track category.name) {
+      @for (category of categories(); track category.name) {
         <li>
           <button type="button" class="item">
             <span class="thumb">

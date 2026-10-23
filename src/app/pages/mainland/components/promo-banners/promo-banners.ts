@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
-import { PROMOS } from '../../data';
+import { Component, inject, signal } from '@angular/core';
+import { CatalogService } from '../../../../services/catalog.service';
+import { PromoBanner } from '../../models';
 
 @Component({
   selector: 'app-promo-banners',
@@ -7,5 +8,10 @@ import { PROMOS } from '../../data';
   styleUrl: './promo-banners.scss',
 })
 export class PromoBanners {
-  protected readonly promos = PROMOS;
+  private readonly catalog = inject(CatalogService);
+  protected readonly promos = signal<PromoBanner[]>([]);
+
+  constructor() {
+    this.catalog.getPromos().subscribe((promos) => this.promos.set(promos));
+  }
 }

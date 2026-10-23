@@ -1,6 +1,6 @@
 <section class="section">
   <div class="container grid">
-    @for (promo of promos; track promo.id) {
+    @for (promo of promos(); track promo.id) {
       <article class="banner" [class]="'banner--' + promo.tone">
         <div class="copy">
           <p>{{ promo.eyebrow }}</p>

@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
-import { CATEGORIES } from '../../data';
+import { Component, inject, signal } from '@angular/core';
+import { CatalogService } from '../../../../services/catalog.service';
+import { CategoryItem } from '../../models';
 
 @Component({
   selector: 'app-category-section',
@@ -7,5 +8,10 @@ import { CATEGORIES } from '../../data';
   styleUrl: './category-section.scss',
 })
 export class CategorySection {
-  protected readonly categories = CATEGORIES;
+  private readonly catalog = inject(CatalogService);
+  protected readonly categories = signal<CategoryItem[]>([]);
+
+  constructor() {
+    this.catalog.getCategories().subscribe((categories) => this.categories.set(categories));
+  }
 }
