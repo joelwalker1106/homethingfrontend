@@ -1,89 +1,149 @@
 <section class="product-detail">
-  <div class="container">
-    @if (loading()) {
+  @if (loading()) {
+    <div class="container">
       <div class="state">商品資料載入中...</div>
-    } @else if (error(); as message) {
+    </div>
+  } @else if (error(); as message) {
+    <div class="container">
       <div class="state state--error">{{ message }}</div>
-    } @else if (product(); as item) {
+    </div>
+  } @else if (product(); as item) {
+    <div class="container">
+      <nav class="breadcrumb" aria-label="麵包屑">
+        <a routerLink="/">首頁</a>
+        <span>/</span>
+        <a [routerLink]="['/products', categoryId()]">{{ item.categoryName || '商品分類' }}</a>
+        <span>/</span>
+        <span>{{ item.modelNumber || item.name }}</span>
+      </nav>
+
       <div class="hero">
         <div class="gallery">
           <div class="gallery__main">
             <img [src]="activeImage()" [alt]="item.name" />
           </div>
-          @if (item.images?.length) {
-            <div class="gallery__thumbs">
-              @for (image of item.images; track image) {
-                <button
-                  type="button"
-                  class="thumb"
-                  [class.is-active]="image === activeImage()"
-                  (click)="selectImage(image)"
-                >
-                  <img [src]="image" [alt]="item.name" />
-                </button>
-              }
-            </div>
-          }
+          <div class="gallery__thumbs">
+            @for (image of galleryImages(); track $index) {
+              <button
+                type="button"
+                class="thumb"
+                [class.is-active]="image === activeImage()"
+                (click)="selectImage(image)"
+              >
+                <img [src]="image" [alt]="item.name" />
+              </button>
+            }
+          </div>
         </div>
 
         <div class="summary">
-          @if (item.badge === 'hot') {
-            <span class="badge badge--hot">熱銷</span>
-          }
-          @if (item.badge === 'new') {
-            <span class="badge badge--new">新品</span>
-          }
+          <span class="category-chip">{{ item.categoryLabel || item.categoryName || '居家健康管理' }}</span>
           <h1>{{ item.name }}</h1>
-          <p class="lead">{{ item.summary || '居家健康照護商品' }}</p>
-
-          <div class="rating">
-            <span class="stars" aria-hidden="true">
-              @for (star of stars; track star) {
-                <svg viewBox="0 0 20 20" [class.is-on]="isStarOn(star, item.rating)">
-                  <path
-                    d="M10 2.5 12.3 7l5 .7-3.6 3.5.9 5L10 14.2 5.4 16.2l.9-5L2.7 7.7l5-.7L10 2.5Z"
-                  />
-                </svg>
-              }
-            </span>
-            <span>{{ item.rating }}（{{ item.reviewCount }} 則評價）</span>
-          </div>
-
-          <div class="price">
-            <strong>{{ item.price | currency: 'TWD':'symbol-narrow':'1.0-0' }}</strong>
-            @if (item.originalPrice; as original) {
-              <s>{{ original | currency: 'TWD':'symbol-narrow':'1.0-0' }}</s>
-            }
-          </div>
-
-          @if (item.licenseNo) {
-            <p class="license">許可字號：{{ item.licenseNo }}</p>
+          <p class="lead">{{ item.summary }}</p>
+          @if (item.modelNumber) {
+            <p class="model">商品型號：{{ item.modelNumber }}</p>
           }
 
-          @if (item.highlights?.length) {
-            <ul class="highlights">
-              @for (point of item.highlights; track point) {
-                <li>{{ point }}</li>
+          @if (item.hidePrice) {
+            <div class="inquire-box">
+              <strong>ⓘ 價格請洽詢</strong>
+              <p>{{ item.inquiryNote || '醫療器材商品資訊與購買方式，歡迎洽詢專人。' }}</p>
+            </div>
+          } @else {
+            <div class="price">
+              <strong>{{ item.price | currency: 'TWD':'symbol-narrow':'1.0-0' }}</strong>
+              @if (item.originalPrice; as original) {
+                <s>{{ original | currency: 'TWD':'symbol-narrow':'1.0-0' }}</s>
               }
-            </ul>
+            </div>
           }
 
           <div class="actions">
-            <button type="button" class="btn btn--primary">加入購物車</button>
-            <button type="button" class="btn btn--ghost">立即洽詢</button>
+            <button type="button" class="btn btn--primary btn--inquiry">
+              <span aria-hidden="true">💬</span>
+              立即洽詢
+            </button>
+            <button type="button" class="btn btn--favorite">♡ 加入收藏</button>
+          </div>
+
+          <div class="trust-row">
+            <div class="trust-item">
+              <span class="trust-icon">👤</span>
+              <div>
+                <strong>專人諮詢</strong>
+                <p>選購與使用建議</p>
+              </div>
+            </div>
+            <div class="trust-item">
+              <span class="trust-icon">🏪</span>
+              <div>
+                <strong>門市服務</strong>
+                <p>實體諮詢更安心</p>
+              </div>
+            </div>
+            <div class="trust-item">
+              <span class="trust-icon">🛡️</span>
+              <div>
+                <strong>售後支援</strong>
+                <p>完善服務與保固</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
+    </div>
 
-      <div class="panels">
-        <article class="panel">
-          <h2>商品說明</h2>
-          <p>{{ item.description || '詳細說明即將補充。' }}</p>
-          <p class="note">醫療器材請詳閱說明書，並依指示使用。量測結果僅供參考，異常請諮詢醫療人員。</p>
-        </article>
+    <section class="feature-bar">
+      <div class="container feature-bar__grid">
+        @for (card of featureCards(); track card.title) {
+          <article class="feature-card">
+            <div class="feature-card__icon" [attr.data-icon]="card.iconKey">●</div>
+            <div>
+              <h3>{{ card.title }}</h3>
+              <p>{{ card.description }}</p>
+            </div>
+          </article>
+        }
+      </div>
+    </section>
 
-        <article class="panel">
-          <h2>規格資訊</h2>
+    <div class="container detail-block">
+      <div class="tabs" role="tablist">
+        <button type="button" role="tab" [class.is-active]="activeTab() === 'intro'" (click)="setTab('intro')">
+          商品介紹
+        </button>
+        <button type="button" role="tab" [class.is-active]="activeTab() === 'specs'" (click)="setTab('specs')">
+          產品規格
+        </button>
+        <button type="button" role="tab" [class.is-active]="activeTab() === 'usage'" (click)="setTab('usage')">
+          使用方式
+        </button>
+        <button type="button" role="tab" [class.is-active]="activeTab() === 'faq'" (click)="setTab('faq')">
+          常見問題
+        </button>
+      </div>
+
+      <div class="tab-panel">
+        @if (activeTab() === 'intro') {
+          <div class="intro-grid">
+            <div class="intro-media">
+              <img [src]="item.introImage || item.image" [alt]="item.name" />
+            </div>
+            <div class="intro-copy">
+              <h2>{{ item.introTitle || '產品介紹' }}</h2>
+              <p>{{ item.introBody || item.description }}</p>
+              @if (item.introBullets?.length) {
+                <ul>
+                  @for (bullet of item.introBullets; track bullet) {
+                    <li>{{ bullet }}</li>
+                  }
+                </ul>
+              }
+            </div>
+          </div>
+        }
+
+        @if (activeTab() === 'specs') {
           @if (item.specs?.length) {
             <table class="specs">
               <tbody>
@@ -98,8 +158,50 @@
           } @else {
             <p class="empty">尚無規格資料</p>
           }
-        </article>
+        }
+
+        @if (activeTab() === 'usage') {
+          @if (item.usageSteps?.length) {
+            <ol class="usage-list">
+              @for (step of item.usageSteps; track step.title) {
+                <li>
+                  <h3>{{ step.title }}</h3>
+                  <p>{{ step.body }}</p>
+                </li>
+              }
+            </ol>
+          } @else {
+            <p class="empty">使用方式資料準備中，歡迎洽詢專人說明。</p>
+          }
+        }
+
+        @if (activeTab() === 'faq') {
+          @if (item.faqs?.length) {
+            <div class="faq-list">
+              @for (faq of item.faqs; track faq.question) {
+                <article class="faq-item">
+                  <h3>{{ faq.question }}</h3>
+                  <p>{{ faq.answer }}</p>
+                </article>
+              }
+            </div>
+          } @else {
+            <p class="empty">常見問題資料準備中。</p>
+          }
+        }
       </div>
-    }
-  </div>
+    </div>
+
+    <section class="cta-banner">
+      <div class="container cta-banner__inner">
+        <div class="cta-banner__text">
+          <h2>{{ item.ctaBannerTitle || '為家人的健康，找到合適的照護用品' }}</h2>
+          <button type="button" class="cta-banner__btn">
+            {{ item.ctaBannerButton || '聯絡我們' }} >
+          </button>
+        </div>
+        <div class="cta-banner__art" aria-hidden="true">⌂</div>
+      </div>
+    </section>
+  }
 </section>

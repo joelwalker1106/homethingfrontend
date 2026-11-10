@@ -31,16 +31,18 @@ export const FEATURES: FeatureItem[] = [
 ];
 
 export const CATEGORIES: CategoryItem[] = [
-  { name: '血壓血糖', image: '/images/category-bp.png' },
-  { name: '熱敷保暖', image: '/images/category-heat.jpg' },
-  { name: '臥床照顧', image: '/images/category-bed.png' },
-  { name: '行動輔具', image: '/images/category-mobility.png' },
-  { name: '電療復健', image: '/images/category-electro.png' },
-  { name: '呼吸治療', image: '/images/category-respiratory.jpg' },
-  { name: '體重體脂', image: '/images/category-bodycomp.jpg' },
-  { name: '健康管理', image: '/images/category-health.jpg' },
-  { name: '護理工作', image: '/images/category-nursing.jpg' },
-  { name: '保養食品', image: '/images/category-supplement.png' },
+  { id: 'mobility-aids', name: '行動輔具', image: '/images/category-mobility.png', hidePrice: true },
+  { id: 'pressure-cushions', name: '減壓坐墊', image: '/images/category-bed.png', hidePrice: true },
+  { id: 'bathroom-aids', name: '衛浴輔具', image: '/images/product-commode.jpg', hidePrice: true },
+  { id: 'nutrition-supplements', name: '營養保健食品', image: '/images/category-supplement.png', hidePrice: true },
+  { id: 'incontinence-supplies', name: '尿褲耗材', image: '/images/category-nursing.jpg', hidePrice: true },
+  { id: 'air-mattresses', name: '氣墊床及減壓床墊', image: '/images/product-mattress.jpg', hidePrice: true },
+  { id: 'home-care-beds', name: '居家用照顧床', image: '/images/product-carebed.png', hidePrice: true },
+  { id: 'heat-electrotherapy', name: '熱敷與電療', image: '/images/category-heat.jpg', hidePrice: true },
+  { id: 'health-monitoring', name: '健康監測', image: '/images/category-bp.png', hidePrice: true },
+  { id: 'respiratory-nasal', name: '呼吸治療與洗鼻', image: '/images/category-respiratory.jpg', hidePrice: true },
+  { id: 'braces-supports', name: '護具', image: '/images/category-electro.png', hidePrice: true },
+  { id: 'wound-care', name: '傷口護理與敷料耗材', image: '/images/category-health.jpg', hidePrice: true },
 ];
 
 export const PRODUCTS: Product[] = [
@@ -54,6 +56,8 @@ export const PRODUCTS: Product[] = [
     reviewCount: 214,
     badge: 'hot',
     tabs: ['hot', 'sale'],
+    category: 'health-monitoring',
+    hidePrice: true,
   },
   {
     id: 'wheelchair-km8522',
@@ -65,6 +69,8 @@ export const PRODUCTS: Product[] = [
     reviewCount: 96,
     badge: 'hot',
     tabs: ['hot', 'sale'],
+    category: 'mobility-aids',
+    hidePrice: true,
   },
   {
     id: 'apex-mattress',
@@ -76,6 +82,8 @@ export const PRODUCTS: Product[] = [
     reviewCount: 73,
     badge: 'hot',
     tabs: ['hot', 'sale'],
+    category: 'air-mattresses',
+    hidePrice: true,
   },
   {
     id: 'care-bed',
@@ -86,6 +94,8 @@ export const PRODUCTS: Product[] = [
     reviewCount: 58,
     badge: 'hot',
     tabs: ['hot', 'new'],
+    category: 'home-care-beds',
+    hidePrice: true,
   },
   {
     id: 'oxygen-5l',
@@ -97,6 +107,8 @@ export const PRODUCTS: Product[] = [
     reviewCount: 41,
     badge: 'hot',
     tabs: ['hot', 'sale'],
+    category: 'respiratory-nasal',
+    hidePrice: true,
   },
   {
     id: 'neck-heat',
@@ -108,6 +120,8 @@ export const PRODUCTS: Product[] = [
     reviewCount: 187,
     badge: 'new',
     tabs: ['new', 'sale'],
+    category: 'heat-electrotherapy',
+    hidePrice: true,
   },
   {
     id: 'nebulizer',
@@ -118,6 +132,8 @@ export const PRODUCTS: Product[] = [
     reviewCount: 64,
     badge: 'new',
     tabs: ['new'],
+    category: 'respiratory-nasal',
+    hidePrice: true,
   },
   {
     id: 'oximeter',
@@ -129,6 +145,8 @@ export const PRODUCTS: Product[] = [
     reviewCount: 132,
     badge: 'new',
     tabs: ['new', 'sale'],
+    category: 'health-monitoring',
+    hidePrice: true,
   },
   {
     id: 'olifuco',
@@ -139,6 +157,8 @@ export const PRODUCTS: Product[] = [
     reviewCount: 89,
     badge: 'new',
     tabs: ['new'],
+    category: 'nutrition-supplements',
+    hidePrice: true,
   },
   {
     id: 'commode',
@@ -149,6 +169,8 @@ export const PRODUCTS: Product[] = [
     reviewCount: 54,
     badge: 'new',
     tabs: ['new'],
+    category: 'bathroom-aids',
+    hidePrice: true,
   },
 ];
 

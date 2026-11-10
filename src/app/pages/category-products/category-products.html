@@ -1,0 +1,36 @@
+<section class="category-page">
+  <div class="container">
+    @if (loading()) {
+      <div class="state">分類載入中...</div>
+    } @else if (error(); as message) {
+      <div class="state state--error">{{ message }}</div>
+    } @else if (category(); as item) {
+      <header class="hero">
+        <div class="hero__text">
+          <p class="eyebrow">商品分類</p>
+          <h1>{{ item.name }}</h1>
+          <p class="lead">
+            @if (item.hidePrice) {
+              此分類商品價格依需求報價，請點選商品或直接洽詢門市。
+            } @else {
+              瀏覽此分類下的相關商品。
+            }
+          </p>
+        </div>
+        <div class="hero__media">
+          <img [src]="item.image" [alt]="item.name" />
+        </div>
+      </header>
+
+      @if (!products().length) {
+        <div class="state">此分類目前尚無商品，歡迎來電洽詢。</div>
+      } @else {
+        <div class="grid">
+          @for (product of products(); track product.id) {
+            <app-product-card [product]="product" />
+          }
+        </div>
+      }
+    }
+  </div>
+</section>

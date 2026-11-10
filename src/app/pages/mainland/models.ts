@@ -14,13 +14,32 @@ export interface FeatureItem {
 }
 
 export interface CategoryItem {
+  id: string;
   name: string;
   image: string;
+  hidePrice?: boolean;
+  sortOrder?: number;
 }
 
 export interface SpecItem {
   label: string;
   value: string;
+}
+
+export interface UsageStep {
+  title: string;
+  body: string;
+}
+
+export interface FaqItem {
+  question: string;
+  answer: string;
+}
+
+export interface FeatureCard {
+  iconKey: string;
+  title: string;
+  description: string;
 }
 
 export interface Product {
@@ -35,9 +54,23 @@ export interface Product {
   badge?: ProductBadge;
   tabs: ProductTab[];
   category?: string;
+  categoryName?: string;
+  categoryLabel?: string;
+  modelNumber?: string;
   summary?: string;
   description?: string;
   licenseNo?: string;
+  hidePrice?: boolean;
+  inquiryNote?: string;
+  introTitle?: string;
+  introBody?: string;
+  introImage?: string;
+  introBullets?: string[];
+  usageSteps?: UsageStep[];
+  faqs?: FaqItem[];
+  featureCards?: FeatureCard[];
+  ctaBannerTitle?: string;
+  ctaBannerButton?: string;
   highlights?: string[];
   specs?: SpecItem[];
 }

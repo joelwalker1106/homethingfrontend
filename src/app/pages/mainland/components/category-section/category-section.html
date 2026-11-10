@@ -2,14 +2,14 @@
   <div class="container">
     <h2 class="section-title">熱門分類</h2>
     <ul class="grid">
-      @for (category of categories(); track category.name) {
+      @for (category of categories(); track category.id) {
         <li>
-          <button type="button" class="item">
+          <a class="item" [routerLink]="['/products', category.id]">
             <span class="thumb">
               <img [src]="category.image" [alt]="category.name" />
             </span>
             <span class="name">{{ category.name }}</span>
-          </button>
+          </a>
         </li>
       }
     </ul>

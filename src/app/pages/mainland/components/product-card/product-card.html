@@ -1,4 +1,4 @@
-<a class="card" [routerLink]="['/products', product().id]">
+<a class="card" [routerLink]="productLink()">
   <div class="card__media">
     @if (product().badge === 'hot') {
       <span class="tag tag--hot">Hot</span>
@@ -11,9 +11,13 @@
   <div class="card__body">
     <h3>{{ product().name }}</h3>
     <div class="price">
-      <strong>{{ money(product().price) }}</strong>
-      @if (product().originalPrice; as original) {
-        <s>{{ money(original) }}</s>
+      @if (product().hidePrice) {
+        <strong class="inquire">立即洽詢</strong>
+      } @else {
+        <strong>{{ money(product().price) }}</strong>
+        @if (product().originalPrice; as original) {
+          <s>{{ money(original) }}</s>
+        }
       }
     </div>
     <div class="rating">

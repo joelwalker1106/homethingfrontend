@@ -5,8 +5,6 @@ import { HeroSection } from './components/hero-section/hero-section';
 import { NewsSection } from './components/news-section/news-section';
 import { PopularPicks } from './components/popular-picks/popular-picks';
 import { PromoBanners } from './components/promo-banners/promo-banners';
-import { SiteFooter } from './components/site-footer/site-footer';
-
 @Component({
   selector: 'app-mainland',
   imports: [
@@ -16,7 +14,6 @@ import { SiteFooter } from './components/site-footer/site-footer';
     PopularPicks,
     PromoBanners,
     NewsSection,
-    SiteFooter,
   ],
   templateUrl: './mainland.html',
   styleUrl: './mainland.scss',
