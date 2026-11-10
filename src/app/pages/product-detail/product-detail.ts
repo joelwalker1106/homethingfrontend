@@ -7,6 +7,19 @@ import { Product } from '../mainland/models';
 
 type DetailTab = 'intro' | 'specs' | 'usage' | 'faq';
 
+const ICON_MAP: Record<string, string> = {
+  home: '/images/HomeThing_Care_Home_Measurement_Icon.svg',
+  'home-measurement': '/images/HomeThing_Care_Home_Measurement_Icon.svg',
+  easy: '/images/HomeThing_Care_Icon_Intuitive_Operation.svg',
+  intuitive: '/images/HomeThing_Care_Icon_Intuitive_Operation.svg',
+  consult: '/images/HomeThing_Care_Icon_Personal_Consultation.svg',
+  'personal-consultation': '/images/HomeThing_Care_Icon_Personal_Consultation.svg',
+  support: '/images/HomeThing_Care_Icon_After_Sales_Support.svg',
+  'after-sales': '/images/HomeThing_Care_Icon_After_Sales_Support.svg',
+  store: '/images/HomeThing_Care_Icon_Store_Service.svg',
+  'store-service': '/images/HomeThing_Care_Icon_Store_Service.svg',
+};
+
 @Component({
   selector: 'app-product-detail',
   imports: [CurrencyPipe, RouterLink],
@@ -24,6 +37,27 @@ export class ProductDetail implements OnInit {
   protected readonly activeTab = signal<DetailTab>('intro');
   protected readonly categoryId = signal('health-monitoring');
 
+  protected readonly bannerBackground = '/images/HomeThing_Care_Family_Health_Banner_Background.svg';
+  protected readonly houseWatermark = '/images/HomeThing_Care_House_Heart_Watermark.svg';
+
+  protected readonly trustItems = [
+    {
+      icon: '/images/HomeThing_Care_Icon_Personal_Consultation.svg',
+      title: '專人諮詢',
+      description: '選購與使用建議',
+    },
+    {
+      icon: '/images/HomeThing_Care_Icon_Store_Service.svg',
+      title: '門市服務',
+      description: '實體諮詢更安心',
+    },
+    {
+      icon: '/images/HomeThing_Care_Icon_After_Sales_Support.svg',
+      title: '售後支援',
+      description: '完善服務與保固',
+    },
+  ];
+
   protected readonly galleryImages = computed(() => {
     const item = this.product();
     if (!item) {
@@ -39,10 +73,10 @@ export class ProductDetail implements OnInit {
       return cards;
     }
     return [
-      { iconKey: 'home', title: '居家量測', description: '方便在家規律使用' },
-      { iconKey: 'easy', title: '操作直覺', description: '介面簡單，容易上手' },
-      { iconKey: 'consult', title: '專人諮詢', description: '提供選購與使用建議' },
-      { iconKey: 'support', title: '安心售後', description: '完善服務與支援' },
+      { iconKey: 'home-measurement', title: '居家量測', description: '方便在家規律使用' },
+      { iconKey: 'intuitive', title: '操作直覺', description: '介面簡單，容易上手' },
+      { iconKey: 'personal-consultation', title: '專人諮詢', description: '提供選購與使用建議' },
+      { iconKey: 'after-sales', title: '安心售後', description: '完善服務與支援' },
     ];
   });
 
@@ -83,5 +117,9 @@ export class ProductDetail implements OnInit {
 
   protected setTab(tab: DetailTab): void {
     this.activeTab.set(tab);
+  }
+
+  protected iconSrc(iconKey: string): string {
+    return ICON_MAP[iconKey] || ICON_MAP['home-measurement'];
   }
 }

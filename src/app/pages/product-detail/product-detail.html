@@ -46,7 +46,10 @@
 
           @if (item.hidePrice) {
             <div class="inquire-box">
-              <strong>ⓘ 價格請洽詢</strong>
+              <strong>
+                <span class="inquire-box__icon" aria-hidden="true">i</span>
+                價格請洽詢
+              </strong>
               <p>{{ item.inquiryNote || '醫療器材商品資訊與購買方式，歡迎洽詢專人。' }}</p>
             </div>
           } @else {
@@ -60,34 +63,30 @@
 
           <div class="actions">
             <button type="button" class="btn btn--primary btn--inquiry">
-              <span aria-hidden="true">💬</span>
+              <img
+                class="btn-icon"
+                src="/images/HomeThing_Care_Icon_Personal_Consultation.svg"
+                alt=""
+                aria-hidden="true"
+              />
               立即洽詢
             </button>
-            <button type="button" class="btn btn--favorite">♡ 加入收藏</button>
+            <button type="button" class="btn btn--favorite">
+              <span class="heart" aria-hidden="true">♡</span>
+              加入收藏
+            </button>
           </div>
 
           <div class="trust-row">
-            <div class="trust-item">
-              <span class="trust-icon">👤</span>
-              <div>
-                <strong>專人諮詢</strong>
-                <p>選購與使用建議</p>
+            @for (trust of trustItems; track trust.title) {
+              <div class="trust-item">
+                <img class="trust-icon" [src]="trust.icon" [alt]="trust.title" />
+                <div>
+                  <strong>{{ trust.title }}</strong>
+                  <p>{{ trust.description }}</p>
+                </div>
               </div>
-            </div>
-            <div class="trust-item">
-              <span class="trust-icon">🏪</span>
-              <div>
-                <strong>門市服務</strong>
-                <p>實體諮詢更安心</p>
-              </div>
-            </div>
-            <div class="trust-item">
-              <span class="trust-icon">🛡️</span>
-              <div>
-                <strong>售後支援</strong>
-                <p>完善服務與保固</p>
-              </div>
-            </div>
+            }
           </div>
         </div>
       </div>
@@ -97,7 +96,7 @@
       <div class="container feature-bar__grid">
         @for (card of featureCards(); track card.title) {
           <article class="feature-card">
-            <div class="feature-card__icon" [attr.data-icon]="card.iconKey">●</div>
+            <img class="feature-card__icon" [src]="iconSrc(card.iconKey)" [alt]="card.title" />
             <div>
               <h3>{{ card.title }}</h3>
               <p>{{ card.description }}</p>
@@ -130,6 +129,7 @@
               <img [src]="item.introImage || item.image" [alt]="item.name" />
             </div>
             <div class="intro-copy">
+              <img class="intro-watermark" [src]="houseWatermark" alt="" aria-hidden="true" />
               <h2>{{ item.introTitle || '產品介紹' }}</h2>
               <p>{{ item.introBody || item.description }}</p>
               @if (item.introBullets?.length) {
@@ -192,15 +192,24 @@
       </div>
     </div>
 
-    <section class="cta-banner">
+    <section
+      class="cta-banner"
+      [style.backgroundImage]="'url(' + bannerBackground + ')'"
+    >
       <div class="container cta-banner__inner">
         <div class="cta-banner__text">
           <h2>{{ item.ctaBannerTitle || '為家人的健康，找到合適的照護用品' }}</h2>
           <button type="button" class="cta-banner__btn">
-            {{ item.ctaBannerButton || '聯絡我們' }} >
+            <img
+              class="btn-icon btn-icon--dark"
+              src="/images/HomeThing_Care_Icon_Personal_Consultation.svg"
+              alt=""
+              aria-hidden="true"
+            />
+            {{ item.ctaBannerButton || '聯絡我們' }}
           </button>
         </div>
-        <div class="cta-banner__art" aria-hidden="true">⌂</div>
+        <img class="cta-banner__art" [src]="houseWatermark" alt="" aria-hidden="true" />
       </div>
     </section>
   }
