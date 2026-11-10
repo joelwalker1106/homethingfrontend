@@ -19,7 +19,9 @@ export class CatalogService {
   }
 
   getProduct(id: string) {
-    return this.http.get<Product>(`/api/products/${id}`);
+    return this.http.get<Product | null>(`/api/products/${id}`).pipe(
+      catchError(() => of(PRODUCTS.find((product) => product.id === id) ?? null)),
+    );
   }
 
   getPromos() {

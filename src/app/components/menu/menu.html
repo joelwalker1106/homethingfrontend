@@ -24,14 +24,21 @@
   </div>
 
   <div class="container header__bar">
-    <a class="logo" routerLink="/" aria-label="弘新醫療器材">
+    <a class="logo" routerLink="/" aria-label="弘新醫療器材" (click)="closeMenu()">
       <img src="/images/homethingLogoBold.png" alt="弘新醫療器材" />
     </a>
 
     <nav class="nav" [class.is-open]="menuOpen()">
       @for (link of links; track link.label) {
         @if (link.href === '/') {
-          <a routerLink="/" class="is-active" (click)="menuOpen.set(false)">{{ link.label }}</a>
+          <a
+            routerLink="/"
+            routerLinkActive="is-active"
+            [routerLinkActiveOptions]="{ exact: true }"
+            (click)="closeMenu()"
+          >
+            {{ link.label }}
+          </a>
         } @else {
           <a href="#" (click)="prevent($event)">{{ link.label }}</a>
         }

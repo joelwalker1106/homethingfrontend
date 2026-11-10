@@ -6,12 +6,10 @@ import { NewsSection } from './components/news-section/news-section';
 import { PopularPicks } from './components/popular-picks/popular-picks';
 import { PromoBanners } from './components/promo-banners/promo-banners';
 import { SiteFooter } from './components/site-footer/site-footer';
-import { SiteHeader } from './components/site-header/site-header';
 
 @Component({
   selector: 'app-mainland',
   imports: [
-    SiteHeader,
     HeroSection,
     FeatureBar,
     CategorySection,

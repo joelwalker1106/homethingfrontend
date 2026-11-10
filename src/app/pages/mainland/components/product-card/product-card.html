@@ -1,4 +1,4 @@
-<article class="card">
+<a class="card" [routerLink]="['/products', product().id]">
   <div class="card__media">
     @if (product().badge === 'hot') {
       <span class="tag tag--hot">Hot</span>
@@ -29,7 +29,7 @@
       <span>{{ product().rating }} ({{ product().reviewCount }})</span>
     </div>
   </div>
-  <button type="button" class="cart" aria-label="加入購物車">
+  <span class="cart" aria-hidden="true">
     <svg viewBox="0 0 24 24" fill="none">
       <path
         d="M6 8h12l-1 11H7L6 8Z"
@@ -39,5 +39,5 @@
       />
       <path d="M9 8V7a3 3 0 0 1 6 0v1" stroke="currentColor" stroke-width="1.8" />
     </svg>
-  </button>
-</article>
+  </span>
+</a>

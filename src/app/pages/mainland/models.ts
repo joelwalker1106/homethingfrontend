@@ -18,16 +18,28 @@ export interface CategoryItem {
   image: string;
 }
 
+export interface SpecItem {
+  label: string;
+  value: string;
+}
+
 export interface Product {
   id: string;
   name: string;
   image: string;
+  images?: string[];
   price: number;
   originalPrice?: number;
   rating: number;
   reviewCount: number;
   badge?: ProductBadge;
   tabs: ProductTab[];
+  category?: string;
+  summary?: string;
+  description?: string;
+  licenseNo?: string;
+  highlights?: string[];
+  specs?: SpecItem[];
 }
 
 export interface PromoBanner {

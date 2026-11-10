@@ -1,0 +1,105 @@
+<section class="product-detail">
+  <div class="container">
+    @if (loading()) {
+      <div class="state">商品資料載入中...</div>
+    } @else if (error(); as message) {
+      <div class="state state--error">{{ message }}</div>
+    } @else if (product(); as item) {
+      <div class="hero">
+        <div class="gallery">
+          <div class="gallery__main">
+            <img [src]="activeImage()" [alt]="item.name" />
+          </div>
+          @if (item.images?.length) {
+            <div class="gallery__thumbs">
+              @for (image of item.images; track image) {
+                <button
+                  type="button"
+                  class="thumb"
+                  [class.is-active]="image === activeImage()"
+                  (click)="selectImage(image)"
+                >
+                  <img [src]="image" [alt]="item.name" />
+                </button>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="summary">
+          @if (item.badge === 'hot') {
+            <span class="badge badge--hot">熱銷</span>
+          }
+          @if (item.badge === 'new') {
+            <span class="badge badge--new">新品</span>
+          }
+          <h1>{{ item.name }}</h1>
+          <p class="lead">{{ item.summary || '居家健康照護商品' }}</p>
+
+          <div class="rating">
+            <span class="stars" aria-hidden="true">
+              @for (star of stars; track star) {
+                <svg viewBox="0 0 20 20" [class.is-on]="isStarOn(star, item.rating)">
+                  <path
+                    d="M10 2.5 12.3 7l5 .7-3.6 3.5.9 5L10 14.2 5.4 16.2l.9-5L2.7 7.7l5-.7L10 2.5Z"
+                  />
+                </svg>
+              }
+            </span>
+            <span>{{ item.rating }}（{{ item.reviewCount }} 則評價）</span>
+          </div>
+
+          <div class="price">
+            <strong>{{ item.price | currency: 'TWD':'symbol-narrow':'1.0-0' }}</strong>
+            @if (item.originalPrice; as original) {
+              <s>{{ original | currency: 'TWD':'symbol-narrow':'1.0-0' }}</s>
+            }
+          </div>
+
+          @if (item.licenseNo) {
+            <p class="license">許可字號：{{ item.licenseNo }}</p>
+          }
+
+          @if (item.highlights?.length) {
+            <ul class="highlights">
+              @for (point of item.highlights; track point) {
+                <li>{{ point }}</li>
+              }
+            </ul>
+          }
+
+          <div class="actions">
+            <button type="button" class="btn btn--primary">加入購物車</button>
+            <button type="button" class="btn btn--ghost">立即洽詢</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="panels">
+        <article class="panel">
+          <h2>商品說明</h2>
+          <p>{{ item.description || '詳細說明即將補充。' }}</p>
+          <p class="note">醫療器材請詳閱說明書，並依指示使用。量測結果僅供參考，異常請諮詢醫療人員。</p>
+        </article>
+
+        <article class="panel">
+          <h2>規格資訊</h2>
+          @if (item.specs?.length) {
+            <table class="specs">
+              <tbody>
+                @for (spec of item.specs; track spec.label) {
+                  <tr>
+                    <th>{{ spec.label }}</th>
+                    <td>{{ spec.value }}</td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          } @else {
+            <p class="empty">尚無規格資料</p>
+          }
+        </article>
+      </div>
+    }
+  </div>
+</section>
